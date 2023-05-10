@@ -1,0 +1,35 @@
+from tkinter import *
+win = Tk()
+root = Frame()
+root.pack()
+
+question = Label(root,text = "Question").pack()
+def single(option):
+	if option == 1:
+		var2.set(0)
+		var3.set(0)
+		var4.set(0)
+	elif option == 2:
+		var1.set(0)
+		var3.set(0)
+		var4.set(0)
+	elif option == 3:
+		var1.set(0)
+		var2.set(0)
+		var4.set(0)
+	else:
+		var1.set(0)
+		var2.set(0)
+		var3.set(0)
+var1 = IntVar()
+var2 = IntVar()
+var3 = IntVar()
+var4 = IntVar()
+
+option1 = Checkbutton(root,variable = var1,text = "option1",command = lambda:single(1)).pack()
+option2 = Checkbutton(root,variable = var2,text = "option2",command = lambda:single(2)).pack()
+option3 = Checkbutton(root,variable = var3,text = "option3",command = lambda:single(3)).pack()
+option4 = Checkbutton(root,variable = var4,text = "option4",command = lambda:single(4)).pack()
+
+
+win.mainloop()
