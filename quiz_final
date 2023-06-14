@@ -1,0 +1,162 @@
+from tkinter import *
+from tkinter import messagebox
+from tkinter import ttk
+import random
+quiz = Tk()
+root = Frame()
+
+root.pack(padx=100,pady=100)
+allquestions = ["a","b","c","d","e"]
+alloptions = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16],[17,18,19,20]]
+allanswers = ["a","d","c","d","b"]
+Questions=[]
+Options=[]
+Answers=[]
+i=1
+selected_option=20
+Question_no = 1
+score=0
+
+try:
+
+	while i<=3:
+		num=random.randrange(0,len(allquestions))
+		Questions.append(allquestions[num])
+		Options.append(alloptions[num])
+		Answers.append(allanswers[num])
+		allquestions.pop(num)
+		alloptions.pop(num)
+		allanswers.pop(num)
+
+		i+=1
+except:
+		num=random.randrange(0,len(allquestions))
+		Questions.append(allquestions[num])
+		Options.append(alloptions[num])
+		Answers.append(allanswers[num])
+		allquestions.pop(num)
+		alloptions.pop(num)
+		allanswers.pop(num)
+
+		i+=1
+
+def single(option):
+	if option == 1:
+		var2.set(0)
+		var3.set(0)
+		var4.set(0)
+	elif option == 2:
+		var1.set(0)
+		var3.set(0)
+		var4.set(0)
+	elif option == 3:
+		var1.set(0)
+		var2.set(0)
+		var4.set(0)
+	else:
+		var1.set(0)
+		var2.set(0)
+		var3.set(0)
+def next():
+	global Question_no
+	global selected_option
+	global score
+	if var1.get()==1:
+		selected_option = "a"
+	elif var2.get()==1:
+		selected_option ="b"
+	elif var3.get()==1:
+		selected_option = "c"
+	elif var4.get()==1:
+		selected_option = "d"
+	else:
+		selected_option = "None"
+
+	if selected_option == Answers[Question_no-1]:
+		score+=1
+	Question_no+=1
+	if Question_no>3:
+		messagebox.showinfo("Result", "Score : " +str(score))
+	else:
+		var1.set(0)
+		var2.set(0)
+		var3.set(0)
+		question.config(text=Questions[Question_no-1])
+		option1.config(text=Options[Question_no-1][0])
+		option2.config(text=Options[Question_no-1][1])
+		option3.config(text=Options[Question_no-1][2])
+		option4.config(text=Options[Question_no-1][3])
+
+def switch_frame():
+    win.forget()
+    root.pack(padx=100,pady=100)
+
+
+win = Frame()
+
+win.pack(padx =100,pady=100)
+
+classes = ["Class","1","2","3","4","5"]
+first = ["a","b"]
+second = ["c","d"]
+third = ["e","f"]
+fourth = ["g","h"]
+fifth = ["i","j"]
+i=0
+def pick_chapter(e):
+    if classmb.get()=="1":
+        chaptermb.config(value=first)
+    elif classmb.get()=="2":
+        chaptermb.config(value=second)
+    elif classmb.get()=="3":
+        chaptermb.config(value=third)
+    elif classmb.get()=="4":
+        chaptermb.config(value=fourth)
+    elif classmb.get()=="5":
+        chaptermb.config(value=fifth)
+    else:
+        i=1
+
+root.forget()
+classmb = ttk.Combobox(win,value=classes,state="readonly")
+classmb.current(0)
+classmb.pack(pady=20)
+
+
+classmb.bind("<<ComboboxSelected>>",pick_chapter)
+
+chaptermb = ttk.Combobox(win,value=[" "],state="readonly")
+chaptermb.current(0)
+chaptermb.pack(pady=20)
+go_b = Button(win,command = switch_frame,text="GO")
+go_b.pack()
+
+
+var1 = IntVar()
+var2 = IntVar()
+var3 = IntVar()
+var4 = IntVar()
+
+question = Label(root,text = Questions[0])
+question.pack()
+
+option1 = Checkbutton(root, variable=var1, text="A", command=lambda: single(1))
+option1.pack()
+
+option2 = Checkbutton(root, variable=var2, text="B", command=lambda: single(2))
+option2.pack()
+
+option3 = Checkbutton(root, variable=var3, text="C", command=lambda: single(3))
+option3.pack()
+
+option4 = Checkbutton(root, variable=var4, text="D", command=lambda: single(4))
+option4.pack()
+
+next_b = Button(root, text="next", command=next)
+next_b.pack()
+
+
+
+
+
+quiz.mainloop()
